@@ -1,0 +1,24 @@
+<div class="cart-item">
+    <div class="item-image">
+      @if (item.product.previewImages && item.product.previewImages.length > 0) {
+        <img [src]="item.product.previewImages[0].path" [alt]="item.product.nameDutch">
+      } @else {
+        <div class="no-image">Geen afbeelding</div>
+      }
+    </div>
+    
+    <div class="item-details">
+      <h2>{{ item.product.nameDutch }}</h2>
+      <p class="item-description">{{ item.product.descriptionDutch | slice:0:100 }}{{ item.product.descriptionDutch.length > 100 ? '...' : '' }}</p>
+      <p class="item-price">€{{ item.product.price }}</p>
+    </div>
+    
+    <div class="item-actions">
+      <div class="quantity-control">
+        <button class="quantity-btn" (click)="updateQuantity(-1)" [disabled]="item.quantity <= 1">-</button>
+        <span class="quantity">{{ item.quantity }}</span>
+        <button class="quantity-btn" (click)="updateQuantity(1)">+</button>
+      </div>
+      <button class="remove-btn" (click)="removeItem()">Verwijderen</button>
+    </div>
+</div>

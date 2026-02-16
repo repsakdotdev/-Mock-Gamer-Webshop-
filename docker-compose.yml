@@ -1,0 +1,45 @@
+version: "3.8"
+
+services:
+  frontend:
+    build: ./G4M3R5-frontend-angular
+    ports:
+      - "28051:80"
+    depends_on:
+      - backend
+    networks:
+      - app-network
+
+  backend:
+    build: ./G4M3R5-backend-springboot
+    ports:
+      - "28050:28050"
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/G4M3R5
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    networks:
+      - app-network
+
+  postgres:
+    image: postgres:16
+    restart: always
+    environment:
+      POSTGRES_USER: postgresuser
+      POSTGRES_PASSWORD: postgrespw!!
+      POSTGRES_DB: G4M3R5
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "28052:5432"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
+volumes:
+  postgres-data:

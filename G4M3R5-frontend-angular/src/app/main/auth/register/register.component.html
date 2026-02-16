@@ -1,0 +1,62 @@
+<div class="register-container">
+  <h2>Registreren</h2>
+  
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group"> 
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+      @if(email?.touched && email?.invalid) {
+        @if(email?.errors?.['required']){
+          <small class="error-message">Email is verplicht</small>
+        } @else if(email?.errors?.['email']) {
+          <small class="error-message">Voer een geldig e-mailadres in</small>
+        }
+      }
+    </div>
+    
+    <div class="form-group">
+      <label for="username">Gebruikersnaam:</label>
+      <input type="text" id="username" formControlName="username">
+      @if(username?.touched && username?.invalid) {
+        @if(username?.errors?.['required']){
+          <small class="error-message">Gebruikersnaam is verplicht</small>
+        }
+      }
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Wachtwoord:</label>
+      <input type="password" id="password" formControlName="password">
+      @if(password?.touched && password?.invalid) {
+        @if(password?.errors?.['required']){
+          <small class="error-message">Wachtwoord is verplicht</small>
+        } @else if(password?.errors?.['minlength']) {
+          <small class="error-message">Wachtwoord moet minstens 6 karakters bevatten</small>
+        }
+      }
+    </div>
+    
+    <div class="form-group checkbox">
+      <input type="checkbox" id="internationalUser" formControlName="internationalUser">
+      <label for="internationalUser">Ik ben een internationale gebruiker</label>
+    </div>
+    
+    @if(errorMessage) {
+      <div class="error-alert">
+        {{ errorMessage }}
+      </div>
+    }
+    
+    <button type="submit" [disabled]="!registerForm.valid || isSubmitting">
+      @if(isSubmitting) {
+        Bezig met registreren...
+      } @else {
+        Registreren
+      }
+    </button>
+  </form>
+  
+  <div class="link-container">
+    <a routerLink="/login">Ik heb al een account</a>
+  </div>
+</div>

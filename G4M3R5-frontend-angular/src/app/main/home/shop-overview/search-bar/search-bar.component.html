@@ -1,0 +1,18 @@
+<div class="search-container">
+  <input 
+    type="text" 
+    [(ngModel)]="searchQuery" 
+    placeholder="{{ 'COMMON.SEARCH' | translate }}..." 
+    (keyup)="onKeyPress($event)"
+  />
+  <button type="button" (click)="onSearch()">{{ 'COMMON.SEARCH' | translate }}</button>
+  <button 
+    type="button" 
+    class="ai-toggle" 
+    (click)="performAISearch()"
+    title="{{ 'COMMON.AI_SEARCH' | translate }}"
+  >
+    <span class="ai-icon">✨</span>
+    <span class="button-text">{{ 'COMMON.AI_SEARCH' | translate }}</span>
+  </button>
+</div>

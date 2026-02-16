@@ -1,0 +1,14 @@
+<div class="language-switcher">
+    <button 
+      [class.active]="languageService.isDutch()" 
+      (click)="switchLanguage('nl')" 
+      title="{{ 'LANGUAGE.SWITCH_TO_DUTCH' | translate }}">
+      🇳🇱
+    </button>
+    <button 
+      [class.active]="languageService.isEnglish()" 
+      (click)="switchLanguage('en')" 
+      title="{{ 'LANGUAGE.SWITCH_TO_ENGLISH' | translate }}">
+      🇬🇧
+    </button>
+  </div>

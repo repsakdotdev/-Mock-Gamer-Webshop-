@@ -1,0 +1,31 @@
+<div class="order-history-container">
+  <header class="page-header">
+    <h1>{{ 'ORDER.HISTORY_TITLE' | translate }}</h1>
+    <p>{{ 'ORDER.HISTORY_SUBTITLE' | translate }}</p>
+  </header>
+  
+  <div class="order-list">
+    @if (loading) {
+      <div class="loading-spinner">
+        <div class="spinner"></div>
+        <p>{{ 'ORDER.LOADING_HISTORY' | translate }}</p>
+      </div>
+    } @else if (error) {
+      <div class="error-message">
+        <p>{{ error }}</p>
+        <button class="retry-button" (click)="loadOrderHistory()">{{ 'COMMON.RETRY' | translate }}</button>
+      </div>
+    } @else if (orders.length === 0) {
+      <div class="empty-state">
+        <i class="fas fa-shopping-bag empty-icon"></i>
+        <h3>{{ 'ORDER.NO_ORDERS' | translate }}</h3>
+        <p>{{ 'ORDER.NO_PURCHASES' | translate }}</p>
+        <a routerLink="/" class="shop-now-button">{{ 'ORDER.START_SHOPPING' | translate }}</a>
+      </div>
+    } @else {
+      @for (order of orders; track order.orderId) {
+        <app-order-card [order]="order"></app-order-card>
+      }
+    }
+  </div>
+</div>

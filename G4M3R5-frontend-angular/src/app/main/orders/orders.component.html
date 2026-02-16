@@ -1,0 +1,139 @@
+<div class="orders-container">
+    <h1>Afrekenen</h1>
+  
+    @if (cartItems.length > 0) {
+      <div class="checkout-grid">
+        <div class="order-details">
+          <h2>Bezorggegevens</h2>
+          
+          <form [formGroup]="orderForm" (ngSubmit)="submitOrder()" class="delivery-form">
+            <div class="form-group">
+              <label for="receiverName">Naam ontvanger:</label>
+              <input 
+                type="text" 
+                id="receiverName" 
+                formControlName="receiverName" 
+                placeholder="Volledige naam"
+              >
+              @if (orderForm.get('receiverName')?.invalid && orderForm.get('receiverName')?.touched) {
+                <small class="error-message">Naam is verplicht</small>
+              }
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group street">
+                <label for="street">Straat:</label>
+                <input 
+                  type="text" 
+                  id="street" 
+                  formControlName="street" 
+                  placeholder="Straatnaam"
+                >
+                @if (orderForm.get('street')?.invalid && orderForm.get('street')?.touched) {
+                  <small class="error-message">Straat is verplicht</small>
+                }
+              </div>
+              
+              <div class="form-group house-number">
+                <label for="houseNumber">Huisnummer:</label>
+                <input 
+                  type="text" 
+                  id="houseNumber" 
+                  formControlName="houseNumber" 
+                  placeholder="123"
+                >
+                @if (orderForm.get('houseNumber')?.invalid && orderForm.get('houseNumber')?.touched) {
+                  <small class="error-message">Huisnummer is verplicht</small>
+                }
+              </div>
+            </div>
+            
+            <div class="form-row">
+              <div class="form-group zip">
+                <label for="zipCode">Postcode:</label>
+                <input 
+                  type="text" 
+                  id="zipCode" 
+                  formControlName="zipCode" 
+                  placeholder="1234 AB"
+                >
+                @if (orderForm.get('zipCode')?.invalid && orderForm.get('zipCode')?.touched) {
+                  <small class="error-message">Geldige postcode is verplicht (bijv. 1234 AB)</small>
+                }
+              </div>
+              
+              <div class="form-group city">
+                <label for="city">Plaats:</label>
+                <input 
+                  type="text" 
+                  id="city" 
+                  formControlName="city" 
+                  placeholder="Amsterdam"
+                >
+                @if (orderForm.get('city')?.invalid && orderForm.get('city')?.touched) {
+                  <small class="error-message">Plaats is verplicht</small>
+                }
+              </div>
+            </div>
+            
+            @if (hasOrderError) {
+              <div class="order-error">
+                {{ orderErrorMessage }}
+              </div>
+            }
+            
+            <div class="form-actions">
+              <a routerLink="/shopping-cart" class="back-button">Terug naar winkelwagen</a>
+              <button 
+                type="submit" 
+                class="place-order-button" 
+                [disabled]="!isOrderFormValid() || isSubmitting"
+              >
+                @if (isSubmitting) {
+                  Bezig met verwerken...
+                } @else {
+                  Bestelling plaatsen
+                }
+              </button>
+            </div>
+          </form>
+        </div>
+        
+        <div class="order-summary">
+          <h2>Bestelling overzicht</h2>
+          
+          <div class="cart-items-summary">
+            @for (item of cartItems; track item.cartItemId) {
+              <div class="summary-item">
+                <div class="item-info">
+                  <span class="item-quantity">{{ item.quantity }}x</span>
+                  <span class="item-name">{{ item.product.nameDutch }}</span>
+                </div>
+                <span class="item-price">€{{ item.product.price * item.quantity | number:'1.2-2' }}</span>
+              </div>
+            }
+          </div>
+          
+          <div class="price-summary">
+            <div class="summary-row">
+              <span>Subtotaal</span>
+              <span>€{{ calculateSubtotal() | number:'1.2-2' }}</span>
+            </div>
+            <div class="summary-row">
+              <span>BTW (21%)</span>
+              <span>€{{ calculateTax() | number:'1.2-2' }}</span>
+            </div>
+            <div class="summary-row total">
+              <span>Totaal</span>
+              <span>€{{ calculateTotal() | number:'1.2-2' }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="empty-order">
+        <p>Je winkelwagen is leeg</p>
+        <a routerLink="/" class="continue-shopping">Verder winkelen</a>
+      </div>
+    }
+  </div>

@@ -1,0 +1,40 @@
+<div class="shopping-cart-container">
+    <h1>Winkelwagen</h1>
+    
+    @if (cartItems.length > 0) {
+      <div class="cart-items">
+        @for (item of cartItems; track item.cartItemId) {
+          <app-shopping-cart-item 
+            [item]="item" 
+            (removeItemEvent)="removeItem($event)" 
+            (updateQuantityEvent)="updateQuantityEvent($event)"
+          ></app-shopping-cart-item>
+        }
+        
+        <div class="cart-summary">
+          <div class="summary-row">
+            <span>Subtotaal</span>
+            <span>€{{ calculateSubtotal() | number:'1.2-2' }}</span>
+          </div>
+          <div class="summary-row">
+            <span>BTW (21%)</span>
+            <span>€{{ calculateTax() | number:'1.2-2' }}</span>
+          </div>
+          <div class="summary-row total">
+            <span>Totaal</span>
+            <span>€{{ calculateTotal() | number:'1.2-2' }}</span>
+          </div>
+          
+          <div class="cart-actions">
+            <button class="checkout-btn" (click)="checkout()">Afrekenen</button>
+            <button class="clear-btn" (click)="clearCart()">Winkelwagen leegmaken</button>
+          </div>
+        </div>
+      </div>
+    } @else {
+      <div class="empty-cart">
+        <p>Je winkelwagen is leeg</p>
+        <a routerLink="/" class="continue-shopping">Verder winkelen</a>
+      </div>
+    }
+  </div>

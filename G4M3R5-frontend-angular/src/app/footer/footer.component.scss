@@ -1,0 +1,22 @@
+@import '../../variables.scss';
+@import '../../styles.scss';
+
+footer {
+    height: 5vh;
+    width: 100%;
+    background: $dark-color-2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+    border-bottom: 2px white solid;
+    position: relative;
+    padding: 0 1rem;
+    justify-content: flex-end;
+
+    small {
+        position: absolute;
+        right: 1rem;
+        color: $text-color-1;
+    }
+}

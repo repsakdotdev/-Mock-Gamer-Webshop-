@@ -1,0 +1,18 @@
+@if(product.forSale) {
+<div class="product-card" (click)="goToProduct()">
+    <div class="product-image">
+        @if (product.previewImages && product.previewImages.length > 0) {
+            <img [src]="product.previewImages[0].path" [alt]="getProductName()">
+        } @else {
+            <div class="no-image">{{ 'PRODUCT.NO_IMAGE' | translate }}</div>
+        }
+    </div>
+    <div class="product-info">
+        <h3 class="product-title">{{ getProductName() }}</h3>
+        <p class="product-price">€{{ product.price }}</p>
+        <button class="add-to-cart-btn" (click)="addToCart(); $event.stopPropagation()">
+            {{ 'PRODUCT.ADD_TO_CART' | translate }}
+        </button>
+    </div>
+</div>
+}

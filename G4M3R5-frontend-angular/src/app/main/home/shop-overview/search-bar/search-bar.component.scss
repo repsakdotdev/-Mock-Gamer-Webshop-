@@ -1,0 +1,178 @@
+@import "../../../../../variables.scss";
+
+.search-container {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  gap: 8px;
+  
+  input {
+    flex: 1;
+    min-width: 120px;
+    padding: 12px 15px;
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px 0 0 8px;
+    background: dark-color-1(0.6);
+    color: $text-color-1;
+    font-size: 16px;
+    outline: none;
+    transition: border-color 0.2s;
+    
+    &:focus {
+      border-color: $accent-color-1;
+    }
+    
+    &::placeholder {
+      color: $text-color-2;
+      opacity: 0.7;
+    }
+  }
+  
+  button {
+    background-color: $accent-color-1;
+    color: #000;
+    font-weight: 600;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    
+    &:hover {
+      background-color: lighten($accent-color-1, 10%);
+    }
+    
+    &:active {
+      background-color: darken($accent-color-1, 5%);
+    }
+  }
+
+  .ai-toggle {
+    background-color: #333;
+    color: $text-color-1;
+    padding: 10px 15px;
+    border: 2px solid rgba(70, 70, 70, 0.7);
+    font-weight: 600;
+    margin-left: 8px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    
+    &:before {
+      content: '';
+      position: absolute;
+      top: -10px;
+      left: -10px;
+      right: -10px;
+      bottom: -10px;
+      background: linear-gradient(45deg, $accent-color-3, $accent-color-1);
+      z-index: -1;
+      opacity: 0;
+      transition: opacity 0.3s;
+      border-radius: 50%;
+      transform: scale(0.1);
+    }
+    
+    &:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.2);
+      
+      .ai-icon {
+        animation: pulse 1.5s infinite;
+      }
+      
+      &:before {
+        opacity: 0.2;
+        transform: scale(0.5);
+        transition: transform 0.3s, opacity 0.3s;
+      }
+    }
+    
+    &:active {
+      transform: translateY(0);
+      background-color: rgba(20, 20, 20, 0.9);
+      color: $accent-color-3;
+      border-color: $accent-color-3;
+      box-shadow: 0 0 10px rgba($accent-color-3, 0.4);
+      
+      &:before {
+        opacity: 0.4;
+        transform: scale(0.8);
+      }
+    }
+    
+    &.active {
+      background-color: rgba(20, 20, 20, 0.9);
+      color: $accent-color-3;
+      border-color: $accent-color-3;
+      box-shadow: 0 0 15px rgba($accent-color-3, 0.5);
+      
+      &:before {
+        opacity: 0.3;
+        transform: scale(1);
+        transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s;
+      }
+      
+      .ai-icon {
+        animation: pulse 1.5s infinite;
+      }
+    }
+    
+    .ai-icon {
+      margin-right: 5px;
+      font-size: 1.1em;
+    }
+    
+    .button-text {
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+  }
+}
+
+// Add media query for mobile responsiveness
+@media (max-width: 600px) {
+  .search-container {
+    flex-direction: column;
+    width: 100%;
+    
+    input {
+      width: 100%;
+      border-radius: 8px;
+    }
+    
+    button {
+      width: 100%;
+      border-radius: 8px;
+      margin-left: 0;
+    }
+    
+    .ai-toggle {
+      width: 100%;
+      margin-left: 0;
+      justify-content: center;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.1);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

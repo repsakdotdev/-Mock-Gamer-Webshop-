@@ -1,0 +1,45 @@
+<div class="login-container">
+  <h2>Inloggen</h2>
+  
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="form-group"> 
+      <label for="email">Email:</label>
+      <input type="email" id="email" formControlName="email">
+      @if(email?.touched && email?.invalid) {
+        @if(email?.errors?.['required']){
+          <small class="error-message">Email is verplicht</small>
+        } @else if(email?.errors?.['email']) {
+          <small class="error-message">Voer een geldig e-mailadres in</small>
+        }
+      }
+    </div>
+    
+    <div class="form-group">
+      <label for="password">Wachtwoord:</label>
+      <input type="password" id="password" formControlName="password">
+      @if(password?.touched && password?.invalid) {
+        @if(password?.errors?.['required']){
+          <small class="error-message">Wachtwoord is verplicht</small>
+        }
+      }
+    </div>
+    
+    @if(errorMessage) {
+      <div class="error-alert">
+        {{ errorMessage }}
+      </div>
+    }
+    
+    <button type="submit" [disabled]="!loginForm.valid || isSubmitting">
+      @if(isSubmitting) {
+        Bezig met inloggen...
+      } @else {
+        Inloggen
+      }
+    </button>
+  </form>
+  
+  <div class="link-container">
+    <a routerLink="/register">Ik heb nog geen account</a>
+  </div>
+</div>

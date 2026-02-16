@@ -1,0 +1,292 @@
+<div class="edit-mode">
+  <div class="edit-header">
+    <h2>{{ isCreating ? ('ADMIN.CREATE_PRODUCT' | translate) : ('ADMIN.EDIT_PRODUCT' | translate) }}</h2>
+    <div class="edit-actions">
+      <button class="cancel-button" (click)="cancel()">{{ 'COMMON.CANCEL' | translate }}</button>
+    </div>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-spinner">{{ 'COMMON.LOADING' | translate }}</div>
+  } @else {
+    @if (errorMessage) {
+      <div class="error-message">{{ errorMessage }}</div>
+    }
+    
+    @if (successMessage) {
+      <div class="success-message">{{ successMessage }}</div>
+    }
+
+    <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+      <div class="form-grid">
+        <!-- Basic Info Section -->
+        <div class="form-section">
+          <h3>{{ 'ADMIN.BASIC_INFO' | translate }}</h3>
+          
+          <div class="form-group">
+            <label for="nameDutch">{{ 'ADMIN.NAME_DUTCH' | translate }} *</label>
+            <input id="nameDutch" type="text" formControlName="nameDutch">
+            @if (productForm.get('nameDutch')?.invalid && productForm.get('nameDutch')?.touched) {
+              <div class="error-hint">{{ 'AUTH.NAME_DUTCH_REQUIRED' | translate }}</div>
+            }
+          </div>
+          
+          <div class="form-group">
+            <label for="nameEnglish">{{ 'ADMIN.NAME_ENGLISH' | translate }} *</label>
+            <input id="nameEnglish" type="text" formControlName="nameEnglish">
+            @if (productForm.get('nameEnglish')?.invalid && productForm.get('nameEnglish')?.touched) {
+              <div class="error-hint">{{ 'AUTH.NAME_ENGLISH_REQUIRED' | translate }}</div>
+            }
+          </div>
+          
+          <div class="form-group">
+            <label for="price">{{ 'PRODUCT.PRICE' | translate }} (€) *</label>
+            <input id="price" type="number" step="0.01" formControlName="price">
+            @if (productForm.get('price')?.invalid && productForm.get('price')?.touched) {
+              <div class="error-hint">{{ 'AUTH.VALID_PRICE_REQUIRED' | translate }}</div>
+            }
+          </div>
+          
+          <div class="form-group">
+            <label for="forSale">{{ 'PRODUCT.FOR_SALE' | translate }}?</label>
+            <div class="toggle-switch">
+              <input id="forSale" type="checkbox" formControlName="forSale">
+              <span class="toggle-label">{{ productForm.get('forSale')?.value ? ('COMMON.YES' | translate) : ('COMMON.NO' | translate) }}</span>
+            </div>
+          </div>
+          
+          @if (!newCategoryMode) {
+            <div class="form-group">
+              <label for="categoryId">{{ 'PRODUCT.CATEGORY' | translate }} *</label>
+              <div class="category-selection">
+                <select id="categoryId" formControlName="categoryId">
+                  <option value="">{{ 'ADMIN.ALL_CATEGORIES' | translate }}</option>
+                  @for (category of categories; track category.categoryId) {
+                    <option [value]="category.categoryId">{{ category.nameDutch }}</option>
+                  }
+                </select>
+                <button type="button" class="add-category-btn" (click)="toggleNewCategoryMode()">
+                  {{ 'ADMIN.NEW_CATEGORY' | translate }}
+                </button>
+              </div>
+              @if (productForm.get('categoryId')?.invalid && productForm.get('categoryId')?.touched) {
+                <div class="error-hint">{{ 'AUTH.CATEGORY_REQUIRED' | translate }}</div>
+              }
+            </div>
+          } @else {
+            <div class="new-category-form">
+              <h4>{{ 'ADMIN.NEW_CATEGORY' | translate }}</h4>
+              <form [formGroup]="newCategoryForm" (ngSubmit)="createNewCategory()">
+                <div class="form-group">
+                  <label for="categoryNameDutch">{{ 'ADMIN.NAME_DUTCH' | translate }} *</label>
+                  <input id="categoryNameDutch" type="text" formControlName="nameDutch">
+                </div>
+                
+                <div class="form-group">
+                  <label for="categoryNameEnglish">{{ 'ADMIN.NAME_ENGLISH' | translate }} *</label>
+                  <input id="categoryNameEnglish" type="text" formControlName="nameEnglish">
+                </div>
+                
+                <div class="button-group">
+                  <button type="submit" [disabled]="newCategoryForm.invalid || isSaving" class="save-button">
+                    {{ isSaving ? ('COMMON.LOADING' | translate) : ('COMMON.SAVE' | translate) }}
+                  </button>
+                  <button type="button" class="cancel-button" (click)="toggleNewCategoryMode()">
+                    {{ 'COMMON.CANCEL' | translate }}
+                  </button>
+                </div>
+              </form>
+            </div>
+          }
+        </div>
+        
+        <!-- Description Section -->
+        <div class="form-section">
+          <h3>{{ 'ADMIN.DESCRIPTION' | translate }}</h3>
+          
+          <div class="form-group">
+            <label for="descriptionDutch">{{ 'ADMIN.NAME_DUTCH' | translate }} *</label>
+            <textarea id="descriptionDutch" rows="5" formControlName="descriptionDutch"></textarea>
+            @if (productForm.get('descriptionDutch')?.invalid && productForm.get('descriptionDutch')?.touched) {
+              <div class="error-hint">{{ 'AUTH.DESCRIPTION_DUTCH_REQUIRED' | translate }}</div>
+            }
+          </div>
+          
+          <div class="form-group">
+            <label for="descriptionEnglish">{{ 'ADMIN.NAME_ENGLISH' | translate }} *</label>
+            <textarea id="descriptionEnglish" rows="5" formControlName="descriptionEnglish"></textarea>
+            @if (productForm.get('descriptionEnglish')?.invalid && productForm.get('descriptionEnglish')?.touched) {
+              <div class="error-hint">{{ 'AUTH.DESCRIPTION_ENGLISH_REQUIRED' | translate }}</div>
+            }
+          </div>
+        </div>
+      </div>
+      
+      <!-- Preview Images Section -->
+      <div class="form-section">
+        <div class="section-header">
+          <h3>{{ 'ADMIN.IMAGES' | translate }}</h3>
+          <button type="button" class="add-button" (click)="showAddPreviewImageForm()">
+            {{ 'ADMIN.ADD_IMAGE' | translate }}
+          </button>
+        </div>
+        
+        <!-- New Preview Image Form -->
+        @if (newPreviewImageMode) {
+          <div class="new-item-form">
+            <h4>{{ 'ADMIN.ADD_IMAGE' | translate }}</h4>
+            <form [formGroup]="newPreviewImageForm" (ngSubmit)="savePreviewImage()">
+              <div class="form-group">
+                <label for="previewImagePath">{{ 'PRODUCT.NO_IMAGE' | translate }}</label>
+                <input type="text" id="previewImagePath" formControlName="path" placeholder="{{ 'PRODUCT.NO_IMAGE' | translate }}">
+                @if (newPreviewImageForm.get('path')?.invalid && newPreviewImageForm.get('path')?.touched) {
+                  <div class="error-hint">{{ 'AUTH.URL_REQUIRED' | translate }}</div>
+                }
+              </div>
+              
+              @if (newPreviewImageForm.get('path')?.value) {
+                <div class="image-preview">
+                  <img [src]="newPreviewImageForm.get('path')?.value" alt="Preview" 
+                       onerror="this.onerror=null; this.src='assets/images/placeholder.png';">
+                </div>
+              }
+              
+              <div class="form-actions">
+                <button type="submit" [disabled]="newPreviewImageForm.invalid">{{ 'COMMON.SUBMIT' | translate }}</button>
+                <button type="button" class="cancel-button" (click)="cancelAddPreviewImage()">{{ 'COMMON.CANCEL' | translate }}</button>
+              </div>
+            </form>
+          </div>
+        }
+        
+        <!-- Preview Images List -->
+        <div class="preview-images" formArrayName="previewImages">
+          @if (previewImages.controls.length === 0) {
+            <div class="no-items">{{ 'PRODUCT.NO_IMAGE' | translate }}</div>
+          }
+          
+          @for (image of previewImages.controls; track i; let i = $index) {
+            <div class="preview-image-item" [formGroupName]="i">
+              <div class="image-input-group">
+                <input type="text" formControlName="path" placeholder="{{ 'PRODUCT.NO_IMAGE' | translate }}">
+                <button type="button" class="remove-button" (click)="removePreviewImage(i)">
+                  {{ 'COMMON.DELETE' | translate }}
+                </button>
+              </div>
+              @if (image.get('path')?.value) {
+                <div class="image-preview">
+                  <img [src]="image.get('path')?.value" alt="Preview" 
+                       onerror="this.onerror=null; this.src='assets/images/placeholder.png';">
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+      
+      <!-- Properties Section -->
+      <div class="form-section">
+        <div class="section-header">
+          <h3>{{ 'ADMIN.PROPERTIES' | translate }}</h3>
+          <button type="button" class="add-button" (click)="showAddPropertyForm()">
+            {{ 'ADMIN.ADD_PROPERTY' | translate }}
+          </button>
+        </div>
+        
+        <!-- New Property Form -->
+        @if (newPropertyMode) {
+          <div class="new-item-form">
+            <h4>{{ 'ADMIN.ADD_PROPERTY' | translate }}</h4>
+            <form [formGroup]="newPropertyForm" (ngSubmit)="saveProperty()">
+              <div class="property-form-grid">
+                <div class="form-group">
+                  <label for="propertyNameDutch">{{ 'ADMIN.NAME_DUTCH' | translate }}</label>
+                  <input type="text" id="propertyNameDutch" formControlName="nameDutch">
+                  @if (newPropertyForm.get('nameDutch')?.invalid && newPropertyForm.get('nameDutch')?.touched) {
+                    <div class="error-hint">{{ 'AUTH.NAME_DUTCH_REQUIRED' | translate }}</div>
+                  }
+                </div>
+                
+                <div class="form-group">
+                  <label for="propertyNameEnglish">{{ 'ADMIN.NAME_ENGLISH' | translate }}</label>
+                  <input type="text" id="propertyNameEnglish" formControlName="nameEnglish">
+                  @if (newPropertyForm.get('nameEnglish')?.invalid && newPropertyForm.get('nameEnglish')?.touched) {
+                    <div class="error-hint">{{ 'AUTH.NAME_ENGLISH_REQUIRED' | translate }}</div>
+                  }
+                </div>
+                
+                <div class="form-group">
+                  <label for="propertyValueDutch">{{ 'ADMIN.NAME_DUTCH' | translate }}</label>
+                  <input type="text" id="propertyValueDutch" formControlName="valueDutch">
+                  @if (newPropertyForm.get('valueDutch')?.invalid && newPropertyForm.get('valueDutch')?.touched) {
+                    <div class="error-hint">{{ 'AUTH.VALUE_DUTCH_REQUIRED' | translate }}</div>
+                  }
+                </div>
+                
+                <div class="form-group">
+                  <label for="propertyValueEnglish">{{ 'ADMIN.NAME_ENGLISH' | translate }}</label>
+                  <input type="text" id="propertyValueEnglish" formControlName="valueEnglish">
+                  @if (newPropertyForm.get('valueEnglish')?.invalid && newPropertyForm.get('valueEnglish')?.touched) {
+                    <div class="error-hint">{{ 'AUTH.VALUE_ENGLISH_REQUIRED' | translate }}</div>
+                  }
+                </div>
+              </div>
+              
+              <div class="form-actions">
+                <button type="submit" [disabled]="newPropertyForm.invalid">{{ 'COMMON.SUBMIT' | translate }}</button>
+                <button type="button" class="cancel-button" (click)="cancelAddProperty()">{{ 'COMMON.CANCEL' | translate }}</button>
+              </div>
+            </form>
+          </div>
+        }
+        
+        <!-- Properties List -->
+        <div class="properties" formArrayName="properties">
+          @if (properties.controls.length === 0) {
+            <div class="no-items">{{ 'PRODUCT.NO_PRODUCTS' | translate }}</div>
+          }
+          
+          @for (prop of properties.controls; track i; let i = $index) {
+            <div class="property-item" [formGroupName]="i">
+              <div class="property-header">
+                <h4>{{ 'ADMIN.PROPERTIES' | translate }} #{{ i + 1 }}</h4>
+                <button type="button" class="remove-button" (click)="removeProperty(i)">
+                  {{ 'COMMON.DELETE' | translate }}
+                </button>
+              </div>
+              
+              <div class="property-form-grid">
+                <div class="form-group">
+                  <label>{{ 'ADMIN.NAME_DUTCH' | translate }}</label>
+                  <input type="text" formControlName="nameDutch">
+                </div>
+                
+                <div class="form-group">
+                  <label>{{ 'ADMIN.NAME_ENGLISH' | translate }}</label>
+                  <input type="text" formControlName="nameEnglish">
+                </div>
+                
+                <div class="form-group">
+                  <label>{{ 'ADMIN.NAME_DUTCH' | translate }}</label>
+                  <input type="text" formControlName="valueDutch">
+                </div>
+                
+                <div class="form-group">
+                  <label>{{ 'ADMIN.NAME_ENGLISH' | translate }}</label>
+                  <input type="text" formControlName="valueEnglish">
+                </div>
+              </div>
+            </div>
+          }
+        </div>
+      </div>
+      
+      <!-- Submit Button -->
+      <div class="form-actions">
+        <button type="submit" [disabled]="productForm.invalid || isSaving" class="submit-button">
+          {{ isSaving ? ('USER_PROFILE.SAVING' | translate) : (isCreating ? ('ADMIN.CREATE_PRODUCT' | translate) : ('ADMIN.EDIT_PRODUCT' | translate)) }}
+        </button>
+      </div>
+    </form>
+  }
+</div>

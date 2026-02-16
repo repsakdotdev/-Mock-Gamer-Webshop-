@@ -1,0 +1,51 @@
+<div class="order-card">
+  <div class="order-header" (click)="toggleExpand()">
+    <div class="order-summary">
+      <div class="order-id">{{ 'ORDER.NUMBER' | translate }} #{{ order.orderId }}</div>
+      <div class="order-date">{{ formatDate(order.orderDate) | date:'dd-MM-yyyy HH:mm' }}</div>
+    </div>
+    <div class="order-total">
+      <span class="price">€{{ order.totalPrice.toFixed(2) }}</span>
+      <div class="status-badge" [ngClass]="getStatusClass()">
+        {{ getStatusLabel() }}
+      </div>
+    </div>
+    <div class="expand-icon">
+      @if (expanded) {
+        <i class="fas fa-chevron-up"></i>
+      } @else {
+        <i class="fas fa-chevron-down"></i>
+      }
+    </div>
+  </div>
+
+  @if (expanded) {
+    <div class="order-details">
+      <div class="order-items">
+        <h4>{{ 'ORDER.ITEMS' | translate }}</h4>
+        @for (item of order.orderItems; track item.orderItemId) {
+          <div class="order-item">
+            <div class="item-image">
+              @if (item.product.previewImages && item.product.previewImages.length > 0) {
+                <img [src]="item.product.previewImages[0].path" [alt]="item.product.nameDutch">
+              }
+            </div>
+            <div class="item-details">
+              <div class="item-name">{{ item.product.nameDutch }}</div>
+              <div class="item-price">€{{ item.product.price.toFixed(2) }} x {{ item.quantity }}</div>
+            </div>
+          </div>
+        }
+      </div>
+      
+      <div class="delivery-info">
+        <h4>{{ 'ORDER.SHIPPING_ADDRESS' | translate }}</h4>
+        <div class="address">
+          <p>{{ order.deliveryAddress.receiverName }}</p>
+          <p>{{ order.deliveryAddress.street }} {{ order.deliveryAddress.houseNumber }}</p>
+          <p>{{ order.deliveryAddress.zipCode }}, {{ order.deliveryAddress.city }}</p>
+        </div>
+      </div>
+    </div>
+  }
+</div>

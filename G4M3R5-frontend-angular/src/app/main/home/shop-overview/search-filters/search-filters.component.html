@@ -1,0 +1,19 @@
+<div class="filter-container">
+  <h3>{{ 'PRODUCT.FILTERS' | translate }}</h3>
+  
+  <div class="filter-section">
+    <label for="category-select">{{ 'PRODUCT.CATEGORY' | translate }}:</label>
+    <select 
+      id="category-select" 
+      [(ngModel)]="selectedCategoryId" 
+      (change)="onCategoryChange()"
+    >
+      <option (click)="clearFilters()" [value]="1">{{ 'ADMIN.ALL_CATEGORIES' | translate }}</option>
+      @for (category of categories; track category.categoryId) {
+        <option [value]="category.categoryId">{{ getCategoryName(category) }}</option>
+      }
+    </select>
+  </div>
+  
+  <button class="clear-filters" (click)="clearFilters()">{{ 'ADMIN.RESET_FILTERS' | translate }}</button>
+</div>

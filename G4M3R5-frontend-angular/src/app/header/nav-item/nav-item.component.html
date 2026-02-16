@@ -1,0 +1,11 @@
+<a [href]="href">
+    @if (iconImage) {
+        <img [src]="iconImage" alt="icon" class="icon-image">
+    }
+    @if (icon && !iconImage) {
+        <span>{{icon}}</span>
+    }
+    @if (!icon && !iconImage) {
+        <span>{{text}}</span>
+    }
+</a>

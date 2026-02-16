@@ -1,0 +1,12 @@
+<div class="toast" [ngClass]="toast.type">
+  <div class="toast-content">
+    <div class="icon">
+      <img [src]="getImagePath()" alt="Toast icon">
+    </div>
+    <div class="message">{{ toast.message }}</div>
+    <button class="close-button" (click)="close()">
+      <img src="assets/images/close.png" alt="Close">
+    </button>
+  </div>
+  <div class="progress-bar"></div>
+</div>

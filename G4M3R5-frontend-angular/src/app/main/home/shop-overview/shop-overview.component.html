@@ -1,0 +1,16 @@
+<section id="shop-overview">
+    <h1>{{ 'PRODUCT.PRODUCTS' | translate }}</h1>
+    <app-search-bar (search)="onSearch($event)"></app-search-bar>
+    <app-search-filters (filterChanged)="onFilterChanged($event)"></app-search-filters>
+    <section id="product-container">
+        @if (products().length > 0) {
+            @for (product of products(); track product.productId) {
+                <app-product-card [product]="product"/>
+            }
+        } @else {
+            <div class="no-products">
+                <p>{{ 'PRODUCT.NO_PRODUCTS' | translate }}</p>
+            </div>
+        }
+    </section>
+</section>

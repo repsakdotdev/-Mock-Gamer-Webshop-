@@ -1,0 +1,17 @@
+@if (properties && properties.length > 0) {
+  <div class="property-viewer">
+    <h2>{{ 'PRODUCT.SPECIFICATIONS' | translate }}</h2>
+    
+    <div class="property-categories">
+      <h3>{{ 'PRODUCT.CATEGORY' | translate }}: {{ getCategoryName() }}</h3>
+      <div class="property-list">
+        @for (prop of properties; track prop) {
+          <div class="property-item">
+            <span class="property-name">{{ getPropertyName(prop) }}</span>
+            <span class="property-value">{{ getPropertyValue(prop) }}</span>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+}

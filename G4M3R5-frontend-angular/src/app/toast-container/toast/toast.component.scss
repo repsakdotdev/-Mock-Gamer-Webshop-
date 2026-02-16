@@ -1,0 +1,148 @@
+@import "../../../variables.scss";
+
+.toast {
+  width: 100%;
+  background-color: dark-color-1(0.95);
+  color: $text-color-1;
+  border-radius: 12px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  animation: slide-in 0.3s ease-out;
+  position: relative;
+  border: 2px solid;
+
+  &.success {
+    border-color: $accent-color-1;
+    .icon {
+      color: $accent-color-1;
+    }
+    .progress-bar::after {
+      background: $accent-color-1;
+    }
+  }
+
+  &.error {
+    border-color: #F44336;
+    .icon {
+      color: #F44336;
+    }
+    .progress-bar::after {
+      background: #F44336;
+    }
+  }
+
+  &.info {
+    border-color: #3498db;
+    .icon {
+      color: #3498db;
+    }
+    .progress-bar::after {
+      background: #3498db;
+    }
+  }
+
+  .toast-content {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    
+    .icon {
+      flex-shrink: 0;
+      margin-right: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      
+      img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+      }
+    }
+    
+    .message {
+      flex-grow: 1;
+      font-family: "Plus Jakarta Sans", sans-serif;
+      font-size: 14px;
+    }
+    
+    .close-button {
+      background: none;
+      border: none;
+      color: $text-color-2;
+      cursor: pointer;
+      padding: 0;
+      font-size: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      .material-icons {
+        font-size: 18px;
+      }
+
+      img {
+        width: 18px;
+        height: 18px;
+        object-fit: contain;
+      }
+    }
+  }
+
+  .progress-bar {
+    height: 3px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    position: relative;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      animation: progress 3s linear forwards;
+    }
+  }
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes progress {
+  0% {
+    width: 100%;
+  }
+  100% {
+    width: 0%;
+  }
+}
+
+@media (max-width: 576px) {
+  .toast {
+    width: 90vw;
+    max-width: 300px;
+    border-radius: 8px;
+    
+    .toast-content {
+      padding: 10px;
+      
+      .message {
+        font-size: 13px;
+      }
+    }
+  }
+}

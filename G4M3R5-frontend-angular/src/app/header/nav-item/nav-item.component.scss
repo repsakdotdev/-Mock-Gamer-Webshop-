@@ -1,0 +1,47 @@
+@import "../../../variables.scss";
+
+a {
+    width: fit-content;
+    font-size: 1.5em;
+    font-family: "Jakarta", sans-serif;
+    font-weight: 700;
+    text-decoration: none;
+    color: $text-color-1;
+    vertical-align: middle;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    span {
+        display: inline-block;
+    }
+
+    .icon-image {
+        height: 24px;
+        width: auto;
+    }
+}
+a:hover {
+     color: $accent-color-1;
+}
+
+:host(.cart-icon) a {
+    font-size: 1.8em;
+
+    .icon-image {
+        height: 28px;
+    }
+}
+
+@media (max-width: 768px) {
+    a {
+        padding: 15px 0;
+        width: 100%;
+    }
+    
+    :host(.cart-icon) a {
+        padding: 0;
+        width: auto;
+    }
+}

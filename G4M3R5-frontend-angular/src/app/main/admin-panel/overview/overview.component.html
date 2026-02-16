@@ -1,0 +1,70 @@
+<div class="product-overview">
+  <div class="overview-header">
+    <h2>{{ 'ADMIN.PRODUCT_OVERVIEW' | translate }}</h2>
+    <button class="create-button" (click)="createNewProduct()">{{ 'ADMIN.NEW_PRODUCT' | translate }}</button>
+  </div>
+
+  <div class="search-filters">
+    <div class="search-box">
+      <input 
+        type="text" 
+        placeholder="{{ 'ADMIN.SEARCH_PRODUCTS' | translate }}" 
+        [(ngModel)]="searchQuery"
+        (keyup.enter)="searchProducts()"
+      >
+      <button (click)="searchProducts()">{{ 'COMMON.SEARCH' | translate }}</button>
+    </div>
+    
+    <div class="category-filter">
+      <select [(ngModel)]="selectedCategory" (change)="searchProducts()">
+        <option [ngValue]="null">{{ 'ADMIN.ALL_CATEGORIES' | translate }}</option>
+        @for (category of categories; track category.categoryId) {
+          <option [value]="category.categoryId">{{ category.nameDutch }}</option>
+        }
+      </select>
+    </div>
+    
+    <button class="reset-button" (click)="resetFilters()">{{ 'ADMIN.RESET_FILTERS' | translate }}</button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading-spinner">{{ 'COMMON.LOADING' | translate }}</div>
+  } @else if (products.length === 0) {
+    <div class="no-products">{{ 'PRODUCT.NO_PRODUCTS' | translate }}</div>
+  } @else {
+    <div class="products-table">
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>{{ 'ADMIN.NAME_DUTCH' | translate }}</th>
+            <th>{{ 'ADMIN.NAME_ENGLISH' | translate }}</th>
+            <th>{{ 'PRODUCT.PRICE' | translate }}</th>
+            <th>{{ 'PRODUCT.CATEGORY' | translate }}</th>
+            <th>{{ 'ADMIN.STATUS' | translate }}</th>
+            <th>{{ 'ADMIN.ACTIONS' | translate }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (product of products; track product.productId) {
+            <tr>
+              <td>{{ product.productId }}</td>
+              <td>{{ product.nameDutch }}</td>
+              <td>{{ product.nameEnglish }}</td>
+              <td>€{{ product.price.toFixed(2) }}</td>
+              <td>{{ product.category.nameDutch }}</td>
+              <td>
+                <span [class.active-status]="product.forSale" [class.inactive-status]="!product.forSale">
+                  {{ product.forSale ? ('PRODUCT.FOR_SALE' | translate) : ('PRODUCT.NOT_FOR_SALE' | translate) }}
+                </span>
+              </td>
+              <td>
+                <button class="edit-button" (click)="editProduct(product.productId)">{{ 'COMMON.EDIT' | translate }}</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

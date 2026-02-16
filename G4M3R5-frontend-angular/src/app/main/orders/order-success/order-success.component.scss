@@ -1,0 +1,170 @@
+@import "../../../../styles.scss";
+@import "../../../../variables.scss";
+
+.success-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 100px);
+  padding: 2rem;
+}
+
+.success-card {
+  background: dark-color-1(0.5);
+  border: 2px solid $accent-color-1;
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 0 2rem $accent-color-2;
+  max-width: 600px;
+  
+  .success-icon {
+    background: $accent-color-1;
+    color: $dark-color-1;
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    font-size: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 1.5rem;
+    box-shadow: 0 0 20px accent-color-1(0.5);
+  }
+  
+  h1 {
+    color: $accent-color-1;
+    font-family: "Doto", sans-serif;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  
+  p {
+    color: $text-color-2;
+    margin-bottom: 2rem;
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  
+  .action-buttons {
+    .home-button {
+      @include action-button;
+      padding: 0.75rem 1.5rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-block;
+      transition: all 0.2s;
+      
+      &:hover {
+        transform: scale(1.05);
+      }
+    }
+  }
+}
+
+.order-success-container {
+  width: 90%;
+  max-width: 800px;
+  margin: 2rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  
+  .success-message {
+    background: dark-color-1(0.5);
+    border: 2px solid $accent-color-3;
+    border-radius: 1rem;
+    padding: 2rem;
+    text-align: center;
+    box-shadow: 0 0 1rem $accent-color-2;
+    width: 100%;
+    
+    .icon-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      
+      svg {
+        width: 80px;
+        height: 80px;
+        color: $accent-color-1;
+        filter: drop-shadow(0 0 10px $accent-color-2);
+      }
+    }
+    
+    h1 {
+      font-family: "Doto", sans-serif;
+      font-weight: 800;
+      color: $accent-color-1;
+      margin-bottom: 1rem;
+      font-size: 2rem;
+    }
+    
+    p {
+      color: $text-color-2;
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+      line-height: 1.6;
+      font-family: "Plus Jakarta Sans", sans-serif;
+    }
+    
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      
+      @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: center;
+      }
+      
+      a {
+        text-decoration: none;
+        font-weight: 600;
+        font-family: "Plus Jakarta Sans", sans-serif;
+        transition: all 0.2s;
+        padding: 0.75rem 2rem;
+        border-radius: 0.5rem;
+        
+        &.view-orders-btn {
+          @include action-button;
+          
+          &:hover {
+            transform: scale(1.05);
+          }
+        }
+        
+        &.continue-shopping-btn {
+          border: 1px solid $accent-color-1;
+          background: none;
+          color: $accent-color-1;
+          
+          &:hover {
+            background: accent-color-1(0.2);
+          }
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 576px) {
+  .order-success-container {
+    width: 95%;
+    
+    .success-message {
+      padding: 1.5rem 1rem;
+      
+      h1 {
+        font-size: 1.6rem;
+      }
+      
+      .icon-container svg {
+        width: 60px;
+        height: 60px;
+      }
+    }
+  }
+}

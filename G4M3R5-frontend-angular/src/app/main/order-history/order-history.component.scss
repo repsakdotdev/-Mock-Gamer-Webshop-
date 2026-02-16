@@ -1,0 +1,130 @@
+@import "../../../styles.scss";
+@import "../../../variables.scss";
+
+.order-history-container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 24px 16px;
+  
+  h1 {
+    font-family: "Doto", sans-serif;
+    font-weight: 800;
+    color: $accent-color-1;
+    margin-bottom: 1.5rem;
+    text-align: center;
+  }
+}
+
+.page-header {
+  margin-bottom: 32px;
+  text-align: center;
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: $accent-color-1;
+    font-family: "Doto", sans-serif;
+  }
+  
+  p {
+    color: $text-color-2;
+    font-size: 1rem;
+  }
+}
+
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 0;
+  
+  .spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid dark-color-2(0.5);
+    border-left-color: $accent-color-1;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+    filter: drop-shadow(0 0 5px $accent-color-3);
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+  
+  p {
+    color: $text-color-2;
+    font-size: 1rem;
+  }
+}
+
+.error-message {
+  text-align: center;
+  padding: 48px 0;
+  
+  p {
+    color: $error-color;
+    margin-bottom: 16px;
+    font-size: 1rem;
+  }
+  
+  .retry-button {
+    @include action-button;
+    padding: 8px 20px;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 64px 0;
+  
+  .empty-icon {
+    font-size: 48px;
+    color: $accent-color-3;
+    margin-bottom: 16px;
+  }
+  
+  h3 {
+    font-family: "Doto", sans-serif;
+    font-size: 1.4rem;
+    color: $accent-color-1;
+    margin-bottom: 12px;
+  }
+  
+  p {
+    color: $text-color-2;
+    margin-bottom: 24px;
+  }
+  
+  .shop-now-button {
+    @include action-button;
+    padding: 10px 24px;
+    border-radius: 0.5rem;
+    font-weight: 500;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.2s;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header h1 {
+    font-size: 1.6rem;
+  }
+}

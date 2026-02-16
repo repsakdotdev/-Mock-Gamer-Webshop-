@@ -1,0 +1,11 @@
+@import "../../variables.scss";
+
+main {
+    background: $dark-color-1;
+    min-height: 90vh;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}

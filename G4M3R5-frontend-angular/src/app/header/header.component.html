@@ -1,0 +1,42 @@
+<header>
+    <a href="/"><img src="assets/images/logo.png" alt="logo"></a>
+    
+    <nav [class.open]="isMenuOpen">
+        @for (navItem of getNavItemsExceptCart(); track navItem) {
+            <app-nav-item [href]="navItem.href" [text]="navItem.textKey | translate"></app-nav-item>
+        }
+    </nav>
+    
+    <div class="header-actions">
+        <!-- Language switcher -->
+        <app-language-switcher></app-language-switcher>
+        
+        <!-- Add user profile button when logged in -->
+        @if (isLoggedIn) {
+            <div class="user-profile">
+                <button class="profile-button" (click)="toggleProfileMenu()">
+                    <img src="../../assets/images/user-icon.png" alt="User">
+                    <span>{{ username }}</span>
+                </button>
+                
+                <!-- Profile dropdown menu -->
+                @if (isProfileMenuOpen) {
+                    <div class="profile-dropdown">
+                        @for (item of profileMenuItems(); track item.labelKey) {
+                            <app-nav-dropdown-item 
+                                [icon]="item.icon" 
+                                [label]="item.labelKey | translate" 
+                                (itemClick)="item.action()">
+                            </app-nav-dropdown-item>
+                        }
+                    </div>
+                }
+            </div>
+        }
+        
+        <app-nav-item [href]="'/cart'" [text]="''" [iconImage]="'assets/images/cart.png'" class="cart-icon"></app-nav-item>
+        <button class="mobile-toggle" (click)="toggleMenu()">
+            <img src="assets/images/expand.png" alt="Menu">
+        </button>
+    </div>
+</header>

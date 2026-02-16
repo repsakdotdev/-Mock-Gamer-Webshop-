@@ -1,0 +1,108 @@
+@import "../../../../../styles.scss";
+@import "../../../../../variables.scss";
+
+.product-card {
+    width: 500px;
+    height: 100%;
+    background: none;
+    border: $accent-color-1 solid 4px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    padding: 2%;
+    border-radius: 1.5em;
+    box-shadow: 0 0 2em $accent-color-2, -0.4em -0.5em 1em $accent-color-2;
+    color: $dark-color-2;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+    
+    &:hover {
+        transform: scale(1.02);
+    }
+
+    .product-image {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 400px;
+        overflow: hidden;
+        margin-bottom: 15px;
+        
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            -webkit-filter: drop-shadow(5px 5px 5px $accent-color-3);
+            filter: drop-shadow(0px -3px 10px $accent-color-3)
+        }
+        
+        .no-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            height: 100%;
+            background: dark-color-2(0.5);
+            color: $text-color-2;
+            border-radius: 8px;
+        }
+    }
+    
+    .product-info {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        
+        .product-title {
+            font-family: "Doto", sans-serif;    
+            font-weight: 800;
+            color: $accent-color-1;
+            font-size: 1.4em;
+            margin-bottom: 10px;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+        
+        .product-price {
+            color: $accent-color-2;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+        
+        .add-to-cart-btn {
+            @include action-button;
+            padding: 10px 15px;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            align-self: flex-start;
+            
+            &:hover {
+                transform: translateY(-2px);
+            }
+            
+            &:active {
+                transform: translateY(1px);
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 540px) {
+    .product-card {
+        width: 90vw;
+        
+        &:hover {
+            box-shadow: none;
+            transform: none;
+        }
+        
+        .add-to-cart-btn {
+            width: 100%;
+            align-self: center;
+        }
+    }
+}
+

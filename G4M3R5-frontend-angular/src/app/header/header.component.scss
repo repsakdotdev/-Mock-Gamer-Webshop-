@@ -1,0 +1,164 @@
+@import "../../variables.scss";
+
+header {
+    height: 10vh;
+    width: 100%;
+    background: $dark-color-2;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5%;
+    border-bottom: 2px white solid;
+    position: relative;
+
+    img, a {
+        height: 100%;
+    }
+
+    nav {
+        height: 100%;
+        flex: 1;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+        align-items: center;
+        gap: 3%;
+    }
+    
+    .header-actions {
+        display: flex;
+        align-items: center;
+        margin-right: 20px;
+        margin-left: auto;
+        gap: 15px; // Add some spacing between elements
+        
+        .cart-icon {
+            margin-right: 15px;
+        }
+        
+        // User profile styling
+        .user-profile {
+            position: relative;
+            display: inline-block;
+            
+            .profile-button {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                background: transparent;
+                border: none;
+                color: white;
+                cursor: pointer;
+                padding: 5px 10px;
+                border-radius: 4px;
+                
+                &:hover {
+                    background-color: rgba(255, 255, 255, 0.1);
+                }
+                
+                img {
+                    height: 24px;
+                    width: 24px;
+                }
+                
+                span {
+                    font-size: 14px;
+                }
+            }
+            
+            .profile-menu {
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background: $dark-color-2;
+                min-width: 180px;
+                z-index: 100;
+                border-radius: 4px;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+                margin-top: 5px;
+                
+                app-nav-item {
+                    display: block;
+                    width: 100%;
+                }
+                
+                .logout-button {
+                    width: 100%;
+                    text-align: left;
+                    background: none;
+                    border: none;
+                    color: white;
+                    padding: 10px 15px;
+                    cursor: pointer;
+                    font-size: 14px;
+                    
+                    &:hover {
+                        background-color: rgba(255, 255, 255, 0.1);
+                    }
+                }
+            }
+            
+            .profile-dropdown {
+                position: absolute;
+                top: 100%; // Position directly below the button
+                right: 0;
+                width: 200px;
+                background-color: white;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                z-index: 1000;
+                margin-top: 5px; // Small gap between button and dropdown
+                overflow: hidden; // Keep child elements within rounded corners
+            }
+        }
+    }
+
+    .mobile-toggle {
+        display: none;
+        background: none;
+        border: none;
+        cursor: pointer;
+        height: 40px;
+        width: 40px;
+        
+        img {
+            height: 100%;
+            width: 100%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .mobile-toggle {
+            display: block;
+            position: static;
+        }
+        
+        nav {
+            position: absolute;
+            top: 10vh;
+            left: 0;
+            width: 100%;
+            height: auto;
+            background: $dark-color-2;
+            flex-direction: column;
+            z-index: 100;
+            display: none;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+            
+            &.open {
+                display: flex;
+            }
+        }
+
+        .header-actions {
+            position: absolute;
+            right: 20px;
+            margin-right: 0;
+            
+            .cart-icon {
+                margin-right: 20px;
+            }
+        }
+    }
+}

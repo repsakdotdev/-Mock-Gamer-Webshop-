@@ -1,0 +1,39 @@
+@import "../../../variables.scss";
+
+.admin-panel {
+  width: 60vw;
+  min-width: fit-content;
+  margin: 2rem auto;
+  padding: 1.5rem;
+  background: dark-color-1(0.5);
+  border: 2px solid $accent-color-3;
+  border-radius: 1rem;
+  box-shadow: 0 0 1rem $accent-color-2;
+  
+  h1 {
+    color: $accent-color-1;
+    font-family: "Doto", sans-serif;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    font-size: 2rem;
+    border-bottom: 1px solid $accent-color-3;
+    padding-bottom: 0.5rem;
+  }
+  
+  .admin-content {
+    margin-top: 2rem;
+  }
+}
+
+// Add responsive styles
+@media (max-width: 768px) {
+  .admin-panel {
+    width: 90vw;
+    min-width: auto;
+    padding: 1rem;
+    
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+}

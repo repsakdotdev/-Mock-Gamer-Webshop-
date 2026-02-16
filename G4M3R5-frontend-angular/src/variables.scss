@@ -1,0 +1,71 @@
+@use "sass:color";
+
+// Base colors
+$dark-color-1: #0D0421;
+$dark-color-2: #080031;
+$accent-color-1: #BC57FF;
+$accent-color-2: #A766FF;
+$accent-color-3: #9274FF;
+$text-color-1: #FDFDFD;
+$text-color-2: #E6E6E6;
+$error-color: #FF6B6B;
+
+// Function to add opacity to any color
+@function with-opacity($color, $opacity) {
+  @return rgba(
+    color.channel($color, "red", $space: rgb), 
+    color.channel($color, "green", $space: rgb), 
+    color.channel($color, "blue", $space: rgb), 
+    $opacity
+  );
+}
+
+// Dark color variations with opacity
+@function dark-color-1($opacity: 1) {
+  @return with-opacity($dark-color-1, $opacity);
+}
+
+@function dark-color-2($opacity: 1) {
+  @return with-opacity($dark-color-2, $opacity);
+}
+
+// Accent color variations with opacity
+@function accent-color-1($opacity: 1) {
+  @return with-opacity($accent-color-1, $opacity);
+}
+
+@function accent-color-2($opacity: 1) {
+  @return with-opacity($accent-color-2, $opacity);
+}
+
+@function accent-color-3($opacity: 1) {
+  @return with-opacity($accent-color-3, $opacity);
+}
+
+// Text color variations with opacity
+@function text-color-1($opacity: 1) {
+  @return with-opacity($text-color-1, $opacity);
+}
+
+@function text-color-2($opacity: 1) {
+  @return with-opacity($text-color-2, $opacity);
+}
+
+@function error-color($opacity: 1) {
+    @return with-opacity($error-color, $opacity);
+}
+
+
+// Mixins for common styles
+@mixin action-button {
+  border: $accent-color-1 2px solid;
+  background: linear-gradient(145deg, $accent-color-1 0%, $accent-color-3 100%);
+}
+
+@mixin form-label {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+@mixin form-input {
+  // Add your form input styles here
+}
