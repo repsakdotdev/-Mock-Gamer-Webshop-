@@ -13,7 +13,7 @@ import org.springframework.http.HttpStatus;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin(origins = {"http://localhost:4200", "http://s1156147.student.inf-hsleiden.nl:16147/"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://g4m3r5.repsak.nl/"})
 public class UserController {
     private final UserRepository userRepository;
 

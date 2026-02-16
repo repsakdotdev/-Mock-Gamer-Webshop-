@@ -15,7 +15,7 @@ import jakarta.validation.Valid; // Java 23 gebruikt jakarta i.p.v. javax
 
 @RestController
 @RequestMapping("/delivery-address")
-@CrossOrigin(origins = {"http://localhost:4200", "http://s1156147.student.inf-hsleiden.nl:16147/"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://g4m3r5.repsak.nl/"})
 public class DeliveryAddressController {
     private final DeliveryAddressDAO addressDAO;
 

@@ -11,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.http.HttpStatus;
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://s1156147.student.inf-hsleiden.nl:16147/"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://g4m3r5.repsak.nl/"})
 @RestController
 @RequestMapping("/categories")
 public class CategoryController {

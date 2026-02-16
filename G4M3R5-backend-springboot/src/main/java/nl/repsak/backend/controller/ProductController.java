@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@CrossOrigin(origins = {"http://localhost:4200", "http://s1156147.student.inf-hsleiden.nl:16147/"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://g4m3r5.repsak.nl/"})
 @RestController
 @RequestMapping("/product")
 public class ProductController {
