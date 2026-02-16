@@ -41,10 +41,10 @@ public class ProductController {
         return ResponseEntity.ok(productDAO.searchProductsByCategoryAndName(category, query));
     }
 
-    @GetMapping("/enhancedsearch")
-    public ResponseEntity<List<Product>> enhancedSearchProducts(@RequestParam(required = true) String query){
-        return ResponseEntity.ok(productDAO.searchProductsWithAI(query));
-    }
+    // @GetMapping("/enhancedsearch")
+    // public ResponseEntity<List<Product>> enhancedSearchProducts(@RequestParam(required = true) String query){
+    //     return ResponseEntity.ok(productDAO.searchProductsWithAI(query));
+    // }
 
     @PostMapping("/admin")
     @PreAuthorize("hasRole('ADMIN')")
